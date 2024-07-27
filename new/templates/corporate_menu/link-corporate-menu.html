@@ -1,0 +1,179 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="app-main__inner">
+    <div class="app-page-title">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div class="page-title-icon">
+                    <i class="pe-7s-add-user text-success">
+                    </i>
+                </div>
+                <div>Manage Corporate Menu
+                    <div class="page-title-subheading">Link Corporate Menu
+                    </div>
+                </div>
+            </div>
+            <div class="page-title-actions">
+                
+            
+            </div>    
+        </div>
+    </div>
+   
+    <div class="tab-content">
+        <div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
+            {% include 'includes/messages.html' %}
+            <div class="main-card mb-3 card">
+                <div class="card-body"><h5 class="card-title">Link Corporate Menu</h5>
+                    <form class="" action="{% url 'link-corporate-menu' %}" method="POST">
+                        {% csrf_token %}
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <div class="position-relative form-group"><label for="menu_name" class="">Menu Name</label>
+                                    <input name="menu_name" id="menu_name" placeholder="Enter Menu Name" type="text" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="position-relative form-group"><label for="menu_position" class="">Menu Position</label>
+                                    <select name="menu_position" id="menu_position" class="mb-2 form-control" required>
+                                        <option value="" disabled selected>-- Select Menu Position --</option>
+                                        <option value="Top">Top</option>
+                                        <option value="Bottom">Bottom</option>
+                                        <option value="Both">Both</option>
+                                        
+                                    </select>  
+                                </div>
+                            </div>
+                            <div class="col-md-6" style="display: none;" id="top_ordering_div">
+                                <div class="position-relative form-group"><label for="top_ordering" class="">Top Ordering</label>
+                                    <input type="text" name="top_ordering" id="top_ordering" placeholder="Enter Top Order" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-6" style="display: none;" id="sub_position_div">
+                                <div class="position-relative form-group"><label for="menu_sub_position" class="">Menu Sub Position</label>
+                                    <select name="menu_sub_position" id="menu_sub_position" class="mb-2 form-control">
+                                        <option value="" disabled selected>-- Select Menu Sub Position --</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                    </select>  
+                                </div>
+                            </div>
+                            <div class="col-md-6" style="display: none;" id="bottom_ordering_div">
+                                <div class="position-relative form-group"><label for="bottom_ordering" class="">Bottom Ordering</label>
+                                    <input type="text" name="bottom_ordering" id="bottom_ordering" placeholder="Enter Bottom Order" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="position-relative form-group"><label for="menu_link_type" class="">Link Type</label>
+                                    <select name="menu_link_type" id="menu_link_type" class="mb-2 form-control" required>
+                                        <option value="" disabled selected>-- Select Link Type --</option>
+                                        <option value="Internal">Internal</option>
+                                        <option value="External">External</option>
+                                    </select>  
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="position-relative form-group" id="page_title_div" style="display: none;"><label for="page_title" class="">Corporate Page Title</label>
+                                    <select name="page_title" id="page_title" class="mb-2 form-control">
+                                        <option value="" disabled selected>-- Select Page --</option>
+                                        {% for page in corporate_pages %}
+                                        {{corporate_pages}}
+                                        <option value="{{page.id}}">{{page.page_title}}</option>
+                                        {% endfor %}
+                                    </select>
+                                     
+                                </div>
+                                <input type="hidden" name="page_title_name"> 
+                            </div>
+                            <div class="col-md-12">
+                                <div class="position-relative form-group" id="link_url_div" style="display: none;"><label for="menu_link_url" class="">Menu Link Url</label>
+                                    <input name="menu_link_url" id="menu_link_url" placeholder="Enter Link Url" type="text" class="form-control" required>
+                                </div>
+                            </div>
+                            
+                            
+                            
+                            
+                            
+                            
+                        </div>
+                        
+                        <button class="mt-2 btn btn-primary">Submit</button>
+                        <a href="{{request.META.HTTP_REFERER}}" class="mt-2 btn btn-secondary">&lt; Back</a>
+                    </form>
+                </div>
+            </div>
+            
+        </div>
+        
+    </div>
+</div>
+
+{% endblock %}
+
+
+
+{% block js %}
+
+    <script>
+        $('#menu_position').change(function(){
+        position  = $(this).val();
+        if (position == 'Bottom'){
+            //Show Bottom Sub Position
+            $('#menu_sub_position').attr("required", true);
+            $("#sub_position_div").css("display", "block");
+            //Show Bottom Ordering
+            $('#bottom_ordering').attr("required", true);
+            $("#bottom_ordering_div").css("display", "block");
+            //Hide Top Ordering
+            $('#top_ordering').attr("required", false);
+            $("#top_ordering_div").css("display", "none");
+
+        }
+        else if (position == 'Top') {
+            //Hide Bottom Sub Position
+            $('#menu_sub_position').attr("required", false);
+            $("#sub_position_div").css("display", "none");
+            //Hide Bottom Ordering
+            $('#bottom_ordering').attr("required", false);
+            $("#bottom_ordering_div").css("display", "none");
+            //Show Top Ordering
+            $('#top_ordering').attr("required", true);
+            $("#top_ordering_div").css("display", "block");
+        }
+        else { // For Both
+            //Show Bottom Sub Position
+            $('#menu_sub_position').attr("required", true);
+            $("#sub_position_div").css("display", "block");
+            //Show Bottom Ordering
+            $('#bottom_ordering').attr("required", true);
+            $("#bottom_ordering_div").css("display", "block");
+            //Show Top Ordering
+            $('#top_ordering').attr("required", true);
+            $("#top_ordering_div").css("display", "block");
+
+        }
+
+    })
+
+    $('#menu_link_type').change(function(){
+        link_type  = $(this).val();
+        if (link_type == 'External'){
+            $('#menu_link_url').attr("required", true);
+            $("#link_url_div").css("display", "block");
+            $("#page_title_div").css("display", "none");
+            $('#page_title').attr("required", false);
+        }
+        else {
+            $('#page_title').attr("required", true);
+            $('#menu_link_url').attr("required", false);
+            $("#page_title_div").css("display", "block");
+            $("#link_url_div").css("display", "none");
+        }
+    })
+    </script>
+
+{% endblock %}

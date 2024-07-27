@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="app-main__inner">
+    <div class="app-page-title">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div class="page-title-icon">
+                    <i class="pe-7s-add-user text-success">
+                    </i>
+                </div>
+                <div>Manage Roles
+                    <div class="page-title-subheading">Edit Role
+                    </div>
+                </div>
+            </div>
+            <div class="page-title-actions">
+                
+            
+            </div>    
+        </div>
+    </div>
+   
+    <div class="tab-content">
+        <div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
+            {% include 'includes/messages.html' %}
+            <div class="main-card mb-3 card">
+                <div class="card-body"><h5 class="card-title">Edit Role</h5>
+                    <form class="" action="" method="POST">
+                        {% csrf_token %}
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="position-relative form-group"><label for="email" class="">Name</label><input name="name" id="exampleName" value="{{role.name}}" type="text" class="form-control" required></div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="position-relative form-group"><label for="description" class="">Description</label><input name="description" id="exampleDescription" value="{{role.description}}" type="description"
+                                                                                                                                         class="form-control" required></div>
+                            </div>
+                        </div>
+
+                        <button class="mt-2 btn btn-primary">Submit</button>
+                        <a href="{{request.META.HTTP_REFERER}}" class="mt-2 btn btn-secondary">&lt; Back</a>
+                    </form>
+                </div>
+            </div>
+            
+        </div>
+        
+    </div>
+</div>
+
+{% endblock %}

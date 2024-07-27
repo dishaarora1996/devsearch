@@ -1,0 +1,22 @@
+<div class="scrollbar-sidebar header-shadow">
+    <div class="app-sidebar__inner">
+        <ul class="vertical-nav-menu">
+            {% for header_menu in admin_menu_permission%}
+            <li class="app-sidebar__heading">{{header_menu.parent_menu_name}}</li>
+            {% for child_menu in header_menu.child_menu %}
+            <li>
+                {% if child_menu.url == 'manage-pages' or child_menu.url == 'manage-banners'  or child_menu.url == 'manage-home-blocks' %}
+                {% url child_menu.url location='Corporate' as url %}
+                {% else %}
+                {% url child_menu.url as url %}
+                {% endif %}
+                <a href="{{url}}" {% if request.path == url %} class="mm-active" {% endif %}>
+                    <i class="metismenu-icon {{child_menu.menu_icon}}"></i>
+                    {{child_menu.child_menu}}
+                </a>
+            </li>
+            {% endfor %}
+            {% endfor %}
+        </ul>
+    </div>
+</div>

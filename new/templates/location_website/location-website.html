@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="app-main__inner">
+    <div class="app-page-title">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div class="page-title-icon">
+                    <i class="pe-7s-user icon-gradient bg-happy-itmeo">
+                    </i>
+                </div>
+                <div>Location Website
+                    <div class="page-title-subheading">Manage Location Website
+                    </div>
+                </div>
+            </div>
+            {% if menu_permission.can_add %}
+            <div class="page-title-actions">
+                <a href = "{% url 'add-location-website' %}" class="btn-shadow btn btn-info"> Launch Location Website</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>            
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="main-card mb-3 card">
+                    
+                <div class="card-body">
+                    <h5 class="card-title">List Of Location Website</h5>
+                    <div class="table-responsive">
+                        <table class="mb-0 table">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Location Name</th>
+                                <th>Url Abbr.</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for loc in location_website %}
+                            <tr>
+                                <th scope="row">{{forloop.counter}}</th>
+                                <td>{{loc.location}}</td>
+                                <td>
+                                    {{loc.url_abbr}}
+                                </td>
+                                <td>
+                                    <form class="" action="change-location-website-status" method="GET">
+                                        {% csrf_token %}
+                                            <input type="hidden" value="{{loc.id}}" name="loc_id">
+                                        {% if loc.status == 'Active' %}
+                                            <input type="hidden" value="Inactive" name="loc_status">
+                                        {% else %}
+                                            <input type="hidden" value="Active" name="loc_status">
+                                        {% endif %}
+                                        <button class="btn {% if loc.status == 'Active' %} btn-success {% else %} btn-warning {% endif %} pt-0 pb-0">{{loc.status}}</button>
+                                    </form>
+                                </td>
+                                <td>
+                                    {% if menu_permission.can_edit %}
+                                    <a href="{% url 'edit-location-website' loc.id %}"><i class="fa fa-edit" style="cursor: pointer;" title="Edit Location Website"> </i></a>
+                                    {% endif %}
+                                    {% if menu_permission.can_edit %}
+                                    <a href="{% url 'manage-pages' loc.location %}"><i class="fa fa-eye"  style="cursor: pointer;" title="View Location Website Pages"> </i></a>
+                                    {% endif %}
+                                    {% if menu_permission.can_edit %}
+                                    <a href="{% url 'manage-home-blocks' loc.location %}"><i class="fa fa-home"  style="cursor: pointer;" title="Edit Location Home Blocks"> </i></a>
+                                    {% endif %}
+                                    {% if menu_permission.can_edit %}
+                                    <a href="{% url 'manage-banners' loc.location %}"><i class="fa fa-picture-o"  style="cursor: pointer;" title="View Page Banner"> </i></a>
+                                    {% endif %}
+                                    {% if menu_permission.can_delete %}
+                                    <a href="{% url 'delete-location-website' loc.id %}" onclick="return confirm('Are you sure you want to delete?');"><i class="fa fa-trash-alt" style="cursor: pointer;" title="Remove"> </i></a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- <div class="" style="margin-top: 20px;">
+                    <nav class="" aria-label="Page navigation">
+                        <ul class="pagination">
+                            <li class="page-item"><a href="javascript:void(0);" class="page-link" aria-label="Previous"><span aria-hidden="true">«</span><span class="sr-only">Previous</span></a></li>
+                            <li class="page-item"><a href="javascript:void(0);" class="page-link">1</a></li>
+                            <li class="page-item active"><a href="javascript:void(0);" class="page-link">2</a></li>
+                            <li class="page-item"><a href="javascript:void(0);" class="page-link">3</a></li>
+                            <li class="page-item"><a href="javascript:void(0);" class="page-link">4</a></li>
+                            <li class="page-item"><a href="javascript:void(0);" class="page-link">5</a></li>
+                            <li class="page-item"><a href="javascript:void(0);" class="page-link" aria-label="Next"><span aria-hidden="true">»</span><span class="sr-only">Next</span></a></li>
+                        </ul>
+                    </nav>
+                </div> -->
+                </div>
+            </div>
+        </div>
+      
+    </div>
+</div>
+
+{% endblock %}

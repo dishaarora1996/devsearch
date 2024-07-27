@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="app-main__inner">
+    <div class="app-page-title">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div class="page-title-icon">
+                    <i class="pe-7s-add-user text-success">
+                    </i>
+                </div>
+                <div>Manage {{location_type}} Pages
+                    <div class="page-title-subheading">Edit {{location_type}} Pages - {% if location_type == 'Location' %} {{location_name}} {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="page-title-actions">
+                
+            
+            </div>    
+        </div>
+    </div>
+   
+    <div class="tab-content">
+        <div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
+            {% include 'includes/messages.html' %}
+            <div class="main-card mb-3 card">
+                <div class="card-body"><h5 class="card-title header">{{location_type}} Pages - {% if location_type == 'Location' %} {{location_name}} {% endif %} </h5>
+                    <form class="" action="" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <div class="position-relative form-group"><label for="title" class="">Title</label><input name="page_title" id="page_title" placeholder="Enter Page Title.." type="text" class="form-control" value="{{page.page_title}}" required></div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <div class="position-relative form-group"><label for="description" class="">Description</label>
+                                    <textarea name="decription_editor" class="form-control" rows="12" cols="50">{{page.description|safe}}</textarea>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <div class="position-relative form-group"><label for="meta_title" class="">Meta Title</label><input name="meta_title" id="meta_title" placeholder="Enter Meta Title.." type="text" class="form-control"  value="{{page.meta_title}}"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <div class="position-relative form-group"><label for="meta_keywords" class="">Meta Keywords</label><input name="meta_keywords" id="meta_keywords" placeholder="Enter Meta Keywords.." type="text" class="form-control"  value="{{page.meta_keywords}}"></div>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <div class="position-relative form-group"><label for="meta_description" class="">Meta Description</label><input name="meta_description" id="meta_description" placeholder="Enter Meta Description.." type="text" class="form-control"  value="{{page.meta_description}}"></div>
+                            </div>
+                        </div>
+
+                        <button class="mt-2 btn btn-primary">Submit</button>
+                        <a href="{{request.META.HTTP_REFERER}}" class="mt-2 btn btn-secondary">&lt; Back</a>
+                    </form>
+                </div>
+            </div>
+            
+        </div>
+        
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block js %}
+<script>
+    window.onload = function() {
+        CKEDITOR.replace('decription_editor');
+    };
+</script>
+
+{% endblock %}

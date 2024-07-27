@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="app-main__inner">
+    <div class="app-page-title">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div class="page-title-icon">
+                    <i class="pe-7s-car icon-gradient bg-mean-fruit">
+                    </i>
+                </div>
+                <div>BBA Dashboard
+                    <div class="page-title-subheading">View analytical Dashboard
+                    </div>
+                </div>
+            </div>
+            <div class="page-title-actions">
+              
+            </div>    
+        </div>
+    </div>            
+    <div class="row">
+        <div class="col-md-6 col-xl-4">
+            <div class="card mb-3 widget-content bg-midnight-bloom">
+                <div class="widget-content-wrapper text-white">
+                    <div class="widget-content-left">
+                        <div class="widget-heading">Total Active Location Websites</div>
+                        <div class="widget-subheading">All location data</div>
+                    </div>
+                    <div class="widget-content-right">
+                        <div class="widget-numbers text-white"><span>{{loc_web_count}}</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-xl-4">
+            <div class="card mb-3 widget-content bg-arielle-smile">
+                <div class="widget-content-wrapper text-white">
+                    <div class="widget-content-left">
+                        <div class="widget-heading">Total Active Users</div>
+                        <div class="widget-subheading">All Users data</div>
+                    </div>
+                    <div class="widget-content-right">
+                        <div class="widget-numbers text-white"><span>{{admin_users_count}}</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-xl-4">
+            <div class="card mb-3 widget-content bg-grow-early">
+                <div class="widget-content-wrapper text-white">
+                    <div class="widget-content-left">
+                        <div class="widget-heading">Total Enquiry</div>
+                        <div class="widget-subheading">This Year</div>
+                    </div>
+                    <div class="widget-content-right">
+                        <div class="widget-numbers text-white"><span>{{enquiry_count}}</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-card mb-3 card">
+                <div class="card-header">New Enquiry List
+                    <div class="btn-actions-pane-right">
+                        <div role="group" class="btn-group-sm btn-group">
+                            <a href="{% url 'manage-enquiries' %}"><button class="btn-primary">View All</button></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="align-middle mb-0 table table-borderless table-striped table-hover">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Message</th>
+                            <th>Location</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                            {% for item in enquiry_list %}
+                        <tr>
+                            <td class="text-muted">{{forloop.counter}}</td>
+                            <td>{{item.first_name}} {{item.last_name}}</td>
+                            <td>{{item.email}}</td>
+                            <td>{{item.phone}}</td>
+                            <td>{{item.message|truncatechars:20 }}</td>
+                            <td>{{item.location}}</td>
+                            <td><a href="#"><i class="fa fa-eye"  style="cursor: pointer;" title="View Detail"> </i></a></td>
+                                
+                            
+                        </tr>
+                        {% endfor %}
+                        
+                        </tbody>
+                    </table>
+                </div>
+                <div class="d-block text-center card-footer">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+{% endblock %}

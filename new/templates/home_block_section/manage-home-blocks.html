@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="app-main__inner">
+    <div class="app-page-title">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div class="page-title-icon">
+                    <i class="pe-7s-user icon-gradient bg-happy-itmeo">
+                    </i>
+                </div>
+                <div>Home Block
+                    <div class="page-title-subheading">Manage Home Block
+                    </div>
+                </div>
+            </div>
+<!--            <div class="page-title-actions">-->
+<!--                <a href = "{% url 'add-corporate-pages' %}" class="btn-shadow btn btn-info"> Add Corporate Pages</a>-->
+<!--            </div>-->
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="main-card mb-3 card">
+                <div class="card-body">
+                    <h5 class="card-title">List Of Home Blocks</h5>
+                    <div class="table-responsive">
+                        <table class="mb-0 table">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <!-- <th>Description</th>
+                                <th>Location</th> -->
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for block in block_section %}
+                            <tr>
+                                <th scope="row">{{forloop.counter}}</th>
+                                <td>{{block.block_name}}</td>
+                                <!-- <td>
+                                    {{ block.description | slice:":20" | safe }}
+                                </td>
+                                <td>{{block.location}}</td> -->
+                                <td>
+                                    <form class="" action="{% url 'change-home-block-status' location=block.location %}" method="GET">
+                                        {% csrf_token %}
+                                            <input type="hidden" value="{{block.id}}" name="block_id">
+                                        {% if block.status == 'Active' %}
+                                            <input type="hidden" value="Inactive" name="block_status">
+                                        {% else %}
+                                            <input type="hidden" value="Active" name="block_status">
+                                        {% endif %}
+                                        <button class="btn {% if block.status == 'Active' %} btn-success {% else %} btn-warning {% endif %} pt-0 pb-0">{{block.status}}</button>
+                                    </form>
+                                    <!-- <a href=""><div class="mb-2 mr-2 badge {% if pages.status == 'Active' %} badge-success {% else %} badge-warning {% endif %}">{{pages.status}}</div></a> -->
+
+                                </td>
+                                <td><a href="{% url 'edit-home-block' block_id=block.id location=block.location %}"><i class="fa fa-edit" style="cursor: pointer;" title="Edit Home Block"> </i></a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="app-main__inner">
+    <div class="app-page-title">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div class="page-title-icon">
+                    <i class="pe-7s-add-user text-success">
+                    </i>
+                </div>
+                <div>Manage Location
+                    <div class="page-title-subheading">Edit Location
+                    </div>
+                </div>
+            </div>
+            <div class="page-title-actions">
+                
+            
+            </div>    
+        </div>
+    </div>
+   
+    <div class="tab-content">
+        <div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
+            {% include 'includes/messages.html' %}
+            <div class="main-card mb-3 card">
+                <div class="card-body"><h5 class="card-title">Edit Location</h5>
+                    <form class="" action="" method="POST">
+                        {% csrf_token %}
+                        <div class="form-row">
+                            
+                            <div class="col-md-6">
+                                <div class="position-relative form-group"><label for="loc_name" class="">Loc Name</label><input name="loc_name" id="loc_name" placeholder="Enter Loc Name" type="text" class="form-control" value={{location.loc_name}} required></div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="position-relative form-group"><label for="country" class="">Country</label>
+                                    <select name="my_country" class="mb-2 form-control" required>
+                                        <option value="{{location.country.id}}" selected>{{location.country.name}}</option>
+                                        {% for country in country_list %}
+                                
+                                        <option value="{{country.id}}">{{country.name}}</option>
+                                        {% endfor %}
+                                        
+                                    </select>  
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="position-relative form-group"><label for="state" class="">State</label>
+                                    <select name="my_state" class="mb-2 form-control" id="state" required>
+                                        <option value="{{location.state.id}}" selected>{{location.state.name}}</option>
+                                        {% for state in state_list %}
+                                
+                                        <option value="{{state.id}}">{{state.name}}</option>
+                                        {% endfor %}
+                                        
+                                    </select>  
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="position-relative form-group"><label for="city" class="">City</label>
+                                    
+                                    <select name="my_city" class="mb-2 form-control" id="city" required>
+                                    <option value="{{location.city.id}}" selected>{{location.city.name}}</option> 
+                                        
+                                    </select>  
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="position-relative form-group"><label for="examplePincode" class="">Pincode</label><input name="pincode" id="examplePincode" placeholder="Enter Pincode" type="text" class="form-control" value={{pincode_text}}></div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="position-relative form-group"><label for="exampleAddress" class="">Address</label><input name="address" id="exampleAddress" placeholder="Enter Address" type="text" class="form-control" value={{location.address}}></div>
+                            </div>
+                            
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="position-relative form-group"><label for="exampleLatitude" class="">Latitude</label><input name="latitude" id="exampleLatitude" placeholder="Enter Latitude" type="text" class="form-control" value={{location.latitude}}></div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="position-relative form-group"><label for="exampleLongitude" class="">Longitude</label><input name="longitude" id="exampleLongitude" placeholder="Enter Longitude" type="text" class="form-control" value={{location.longitude}}></div>
+                            </div>
+                            
+                        </div>
+                        
+                        
+                        <button class="mt-2 btn btn-primary">Submit</button>
+                        <a href="{{request.META.HTTP_REFERER}}" class="mt-2 btn btn-secondary">&lt; Back</a>
+                    </form>
+                </div>
+            </div>
+            
+        </div>
+        
+    </div>
+</div>
+
+{% endblock %}
+
+{% block js %}
+    <script>
+        $('#state').change(function(){
+            var selectedValue = $(this).val()
+            // alert($(this).val());
+        
+        $.ajax({
+            type: 'GET',
+            url: '{% url "get_city_list" %}',
+            data : { 'selected_value': selectedValue},
+            dataType: 'json',
+            success : function(data) {
+                console.log("requested access complete");
+                console.log(data);
+                $("#city").empty();
+                var city = $("#city");
+                $(data.data).each(function () {
+                    var option = $("<option />");
+    
+                    //Set city name in Text part.
+                    option.html(this.name);
+    
+                    //Set city id in Value part.
+                    option.val(this.id);
+    
+                    //Add the Option element to DropDownList.
+                    city.append(option);
+                });
+
+            }
+        })
+
+    })
+    </script>
+{% endblock %}

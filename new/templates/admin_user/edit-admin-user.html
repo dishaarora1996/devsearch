@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="app-main__inner">
+    <div class="app-page-title">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div class="page-title-icon">
+                    <i class="pe-7s-add-user text-success">
+                    </i>
+                </div>
+                <div>Manage Users
+                    <div class="page-title-subheading">Add New User
+                    </div>
+                </div>
+            </div>
+            <div class="page-title-actions">
+                
+            
+            </div>    
+        </div>
+    </div>
+   
+    <div class="tab-content">
+        <div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
+            {% include 'includes/messages.html' %}
+            <div class="main-card mb-3 card">
+                <div class="card-body"><h5 class="card-title">Add New Admin User</h5>
+                    <form class="" action="{% url 'edit-admin-user' employee.id %}" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="position-relative form-group"><label for="Name" class="">Select User Type</label>
+                                    <select name="user_type" class="mb-2 form-control" required>
+                                        <option value="{{employee.role.id}}" selected>{{employee.role.name}}</option>
+                                        {% for role in user_type %}
+                                
+                                        <option value="{{role.id}}">{{role.name}}</option>
+                                        {% endfor %}
+                                        
+                                    </select>  
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="position-relative form-group"><label for="Name" class="">Name</label><input name="name" id="name" placeholder="Enter Name" type="text" class="form-control" value="{{employee.name}}"></div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="position-relative form-group"><label for="email" class="">Email</label><input name="email" id="exampleEmail11" placeholder="Enter Admin Email.." type="email" class="form-control" value="{{employee.email}}" required></div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="position-relative form-group"><label for="password" class="">Password</label><input name="password" id="examplePassword11" placeholder="Enter Password.." type="password"
+                                                                                                                                         class="form-control"></div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="position-relative form-group"><label for="Profile" class="">Profile Image</label><input name="image" id="image"  type="file" class="form-control">
+                                    {{employee.profile_image}}</div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="position-relative form-group"><label for="examplePhone" class="">Phone</label><input name="phone" id="examplePhone" placeholder="" type="text" class="form-control" maxlength="10" value="{{employee.phone}}"></div>
+                            </div>
+                            
+                        </div>
+
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="position-relative form-group"><label for="exampleAddress" class="">Address</label><input name="address" id="exampleAddress" placeholder="1234 Main St" type="text" class="form-control" value="{{employee.emp_address}}"></div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="position-relative form-group"><label for="Name" class="">Select Location</label>
+                                    <select name="location" class="mb-2 form-control" multiple required>
+                                        <option value="" disabled>-- Select Location --</option>
+                                        {% for i in emp_loc %}
+                                        <option value="{{i.location_id.id}}" selected>{{i.location_id.loc_name}}</option>
+                                        {% endfor %}
+                                        {% for loc in location %}
+                                
+                                        <option value="{{loc.id}}">{{loc.loc_name}}</option>
+                                        {% endfor %}
+                                        
+                                    </select>  
+                                </div>
+                            </div>
+                           
+                        </div>
+                        <button class="mt-2 btn btn-primary">Submit</button>
+                        <a href="{{request.META.HTTP_REFERER}}" class="mt-2 btn btn-secondary">&lt; Back</a>
+                    </form>
+                </div>
+            </div>
+            
+        </div>
+        
+    </div>
+</div>
+
+{% endblock %}

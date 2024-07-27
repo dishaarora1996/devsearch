@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="app-main__inner">
+    <div class="app-page-title">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div class="page-title-icon">
+                    <i class="pe-7s-user icon-gradient bg-happy-itmeo">
+                    </i>
+                </div>
+                <div>Manage Location
+                    <div class="page-title-subheading">Manage all locations
+                    </div>
+                </div>
+            </div>
+            {% if menu_permission.can_add %}
+            <div class="page-title-actions">
+                <a href = "{% url 'add-location' %}" class="btn-shadow btn btn-info"> Add Location</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>            
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="main-card mb-3 card">
+                    <div class="card-body"><h5 class="card-title"></h5>
+                        <div>
+                            <form class="form-inline" method="GET" action="{% url 'location-search' %}">
+                                <div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group"><label for="exampleSearch" class="mr-sm-2">Search By</label><input name="search" id="exampleSearch" placeholder="Name / City / State / Country" type="text" class="form-control" value="{{search_value}}"></div>
+                                <button class="btn btn-primary">Search</button>
+                            </form>
+                            <div class="divider"></div>
+                        </div>
+                    </div>
+                <div class="card-body">
+                    <h5 class="card-title">List Location</h5>
+                    <div class="table-responsive">
+                        <table class="mb-0 table">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Loc Name</th>
+                                <th>City</th>
+                                <th>State</th>
+                                <th>Country</th>
+                                <th>Address</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for location in location_list %}
+                            <tr>
+                                <th scope="row">{{location.id}}</th>
+                                <td>{{location.loc_name}}</td>
+                                <td>{{location.city}}</td>
+                                <td>{{location.state}}</td>
+                                <td>{{location.country}}</td>
+                                <td>{{location.address}}</td>
+                                <td>
+                                    <form class="" action="change-location-status" method="GET">
+                                        {% csrf_token %}
+                                            <input type="hidden" value="{{location.id}}" name="location_id">
+                                        {% if location.status == 'Active' %}
+                                            <input type="hidden" value="Inactive" name="location_status">
+                                        {% else %}
+                                            <input type="hidden" value="Active" name="location_status">
+                                        {% endif %}
+                                        <button class="btn {% if location.status == 'Active' %} btn-success {% else %} btn-warning {% endif %} pt-0 pb-0">{{location.status}}</button>
+                                    </form>
+                                </td>
+                                <td>
+                                    {% if menu_permission.can_edit %}
+                                    <a href="{% url 'edit-location' location.id %}"><i class="fa fa-edit" style="cursor: pointer;" title="Edit"> </i></a>
+                                    {% endif %}
+
+                                    <i class="fa fa-eye" style="cursor: pointer;" title="View"> </i>
+
+                                    {% if menu_permission.can_delete %}
+                                    <a href="{% url 'delete-location' location.id %}"  onclick="return confirm('Are you sure you want to delete?');"><i class="fa fa-trash-alt" style="cursor: pointer;" title="Remove"> </i></a>
+                                    {% endif %}
+
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- <div class="" style="margin-top: 20px;">
+                    <nav class="" aria-label="Page navigation">
+                        <ul class="pagination">
+                            <li class="page-item"><a href="javascript:void(0);" class="page-link" aria-label="Previous"><span aria-hidden="true">«</span><span class="sr-only">Previous</span></a></li>
+                            <li class="page-item"><a href="javascript:void(0);" class="page-link">1</a></li>
+                            <li class="page-item active"><a href="javascript:void(0);" class="page-link">2</a></li>
+                            <li class="page-item"><a href="javascript:void(0);" class="page-link">3</a></li>
+                            <li class="page-item"><a href="javascript:void(0);" class="page-link">4</a></li>
+                            <li class="page-item"><a href="javascript:void(0);" class="page-link">5</a></li>
+                            <li class="page-item"><a href="javascript:void(0);" class="page-link" aria-label="Next"><span aria-hidden="true">»</span><span class="sr-only">Next</span></a></li>
+                        </ul>
+                    </nav>
+                </div> -->
+                </div>
+            </div>
+        </div>
+      
+    </div>
+</div>
+
+{% endblock %}

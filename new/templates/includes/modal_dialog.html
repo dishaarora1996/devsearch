@@ -1,0 +1,33 @@
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Mail Body</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form class="" action="" method="POST" enctype="multipart/form-data">
+                <div class="modal-body">
+                        {% csrf_token %}
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <div class="position-relative form-group"><label for="email_subject" class="">Subject</label><input name="email_subject" id="email_subject" placeholder="Enter Subject" type="text" class="form-control" required></div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <div class="position-relative form-group"><label for="email_body" class="">Body</label>
+                                    <textarea  name="email_body" class="form-control" rows="12" cols="50" id="email_body"></textarea></div>
+                            </div>
+                        </div>
+                        
+                </div>
+                <div class="modal-footer">
+                    
+                    <button class="mt-2 btn btn-primary" id="mail_submit">Submit</button>
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>

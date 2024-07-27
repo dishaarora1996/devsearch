@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="app-main__inner">
+    <div class="app-page-title">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div class="page-title-icon">
+                    <i class="pe-7s-add-user text-success">
+                    </i>
+                </div>
+                <div>Manage Settings
+                    <div class="page-title-subheading">Add Settings
+                    </div>
+                </div>
+            </div>
+            <div class="page-title-actions">
+                
+            
+            </div>    
+        </div>
+    </div>
+   
+    <div class="tab-content">
+        <div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
+            {% include 'includes/messages.html' %}
+            <div class="main-card mb-3 card">
+                <div class="card-body"><h5 class="card-title">Add New Settings</h5>
+                    <form class="" action="{% url 'add-settings' %}" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="position-relative form-group"><label for="title" class="">Corporate Site Title</label><input name="site_title" id="site_title" placeholder="Enter Corporate Site Title" type="text" class="form-control"></div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="position-relative form-group"><label for="logo" class="">Logo Image</label><input name="logo" id="logo"  type="file" class="form-control"></div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                        <div class="col-md-12">
+                                <div class="position-relative form-group"><label for="footer_copyright" class="">Footer Copyright</label><input name="footer_copyright" id="footer_copyright" name="footer_copyright" placeholder="Enter Footer Copyright" type="text" class="form-control"></div>
+                            </div>
+                           
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="position-relative form-group"><label for="email" class="">Email</label><input name="email" id="email"  type="text" class="form-control" placeholder="Enter Contact Email"></div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="position-relative form-group"><label for="phone" class="">Phone</label><input name="phone" id="phone" placeholder="Enter Contact Phone" type="text" class="form-control" maxlength="10"></div>
+                            </div>
+                            
+                        </div>
+                        <b><label for="">Follow Us:</label></b>
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="position-relative form-group"><label for="facebook" class="">Facebook</label><input name="facebook" id="facebook"  type="text" class="form-control" placeholder="Enter Facebook Url"></div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="position-relative form-group"><label for="instagram" class="">Instagram</label><input name="instagram" id="instagram"  type="text" class="form-control" maxlength="10" placeholder="Enter Instagram Url"></div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="position-relative form-group"><label for="youtube" class="">Youtube</label><input name="youtube" id="youtube"  type="text" class="form-control" placeholder="Enter Youtube Url"></div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="position-relative form-group"><label for="twitter" class="">Twitter</label><input name="twitter" id="twitter" type="text" class="form-control" maxlength="10" placeholder="Enter Twitter Url"></div>
+                            </div>
+                            
+                        </div>
+                        
+                        <button class="mt-2 btn btn-primary">Submit</button>
+                        
+                    <a href="{{request.META.HTTP_REFERER}}" class="mt-2 btn btn-secondary">&lt; Back</a>
+                        
+                    </form>
+                </div>
+            </div>
+            
+        </div>
+        
+    </div>
+</div>
+
+{% endblock %}

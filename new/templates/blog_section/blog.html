@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="app-main__inner">
+    <div class="app-page-title">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div class="page-title-icon">
+                    <i class="pe-7s-user icon-gradient bg-happy-itmeo">
+                    </i>
+                </div>
+                <div>Blogs
+                    <div class="page-title-subheading">Manage Blogs
+                    </div>
+                </div>
+            </div>
+            {% if menu_permission.can_add %}
+            <div class="page-title-actions">
+                <a href = "{% url 'add-blog' %}" class="btn-shadow btn btn-info"> Add New Blog</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>            
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="main-card mb-3 card">
+                    
+                <div class="card-body">
+                    <h5 class="card-title">List Of Blogs</h5>
+                    <div class="table-responsive">
+                        <table class="mb-0 table">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Blog Title</th>
+                                <th>Blog Image</th>
+                                <th>Location</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for blog in blog_list %}
+                            <tr>
+                                <th scope="row">{{forloop.counter}}</th>
+                                <td>{{blog.blog_title}}</td>
+                                <td>
+                                    {% if blog.blog_image %}
+                                    <img src="{{IMAGE_MEDIA_PATH}}{{blog.blog_image}}" 
+                                    width="100px", height="30px" />
+                                    {% else %}
+                                    <img src="" />  
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if blog.location %}
+                                    {{blog.location}}
+                                    {% else %}
+                                    All Location
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <form class="" action="change-location-website-status" method="GET">
+                                        {% csrf_token %}
+                                            <input type="hidden" value="{{blog.id}}" name="blog_id">
+                                        {% if blog.status == 'Active' %}
+                                            <input type="hidden" value="Inactive" name="blog_status">
+                                        {% else %}
+                                            <input type="hidden" value="Active" name="blog_status">
+                                        {% endif %}
+                                        <button class="btn {% if blog.status == 'Active' %} btn-success {% else %} btn-warning {% endif %} pt-0 pb-0">{{blog.status}}</button>
+                                    </form>
+                                </td>
+                                <td>
+                                    {% if menu_permission.can_edit %}
+                                    <a href="{% url 'edit-blog' blog.id %}"><i class="fa fa-edit" style="cursor: pointer;" title="Edit Blog"> </i></a>
+                                    {% endif %}
+                                    {% if menu_permission.can_delete %}
+                                    <a href="{% url 'delete-blog' blog.id %}" onclick="return confirm('Are you sure you want to delete?');"><i class="fa fa-trash-alt" style="cursor: pointer;" title="Remove"> </i></a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- <div class="" style="margin-top: 20px;">
+                    <nav class="" aria-label="Page navigation">
+                        <ul class="pagination">
+                            <li class="page-item"><a href="javascript:void(0);" class="page-link" aria-label="Previous"><span aria-hidden="true">«</span><span class="sr-only">Previous</span></a></li>
+                            <li class="page-item"><a href="javascript:void(0);" class="page-link">1</a></li>
+                            <li class="page-item active"><a href="javascript:void(0);" class="page-link">2</a></li>
+                            <li class="page-item"><a href="javascript:void(0);" class="page-link">3</a></li>
+                            <li class="page-item"><a href="javascript:void(0);" class="page-link">4</a></li>
+                            <li class="page-item"><a href="javascript:void(0);" class="page-link">5</a></li>
+                            <li class="page-item"><a href="javascript:void(0);" class="page-link" aria-label="Next"><span aria-hidden="true">»</span><span class="sr-only">Next</span></a></li>
+                        </ul>
+                    </nav>
+                </div> -->
+                </div>
+            </div>
+        </div>
+      
+    </div>
+</div>
+
+{% endblock %}

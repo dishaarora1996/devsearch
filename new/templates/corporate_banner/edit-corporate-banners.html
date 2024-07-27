@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="app-main__inner">
+    <div class="app-page-title">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div class="page-title-icon">
+                    <i class="pe-7s-add-user text-success">
+                    </i>
+                </div>
+                <div>Manage Corporate Banners
+                    <div class="page-title-subheading">Edit Banner
+                    </div>
+                </div>
+            </div>
+            <div class="page-title-actions">
+                
+            
+            </div>    
+        </div>
+    </div>
+   
+    <div class="tab-content">
+        <div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
+            {% include 'includes/messages.html' %}
+            <div class="main-card mb-3 card">
+                <div class="card-body"><h5 class="card-title">Add New  Banner</h5>
+                    <form class="" action="" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="position-relative form-group"><label for="page_title" class="">Page Title</label>
+                                    <select name="page_title" class="mb-2 form-control" required>
+                                        <option value="{{corporate_banner.page_title.id}}" selected>{{corporate_banner.page_title}}</option>
+                                        {% for page in corporate_pages %}
+                                
+                                        <option value="{{page.id}}">{{page.page_title}}</option>
+                                        {% endfor %}
+                                        
+                                    </select>  
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="position-relative form-group"><label for="Profile" class="">Profile Image</label><input name="banner_image" id="banner_image"  type="file" class="form-control">{{corporate_banner.banner_image}}</div>
+                            </div>
+                        </div>
+                        
+                        <button class="mt-2 btn btn-primary">Submit</button>
+                        <a href="{{request.META.HTTP_REFERER}}" class="mt-2 btn btn-secondary">&lt; Back</a>
+                    </form>
+                </div>
+            </div>
+            
+        </div>
+        
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="app-main__inner">
+    <div class="app-page-title">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div class="page-title-icon">
+                    <i class="pe-7s-add-user text-success">
+                    </i>
+                </div>
+                <div>Manage Location Website
+                    <div class="page-title-subheading">Add New Location Website
+                    </div>
+                </div>
+            </div>
+            <div class="page-title-actions">
+                
+            
+            </div>    
+        </div>
+    </div>
+   
+    <div class="tab-content">
+        <div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
+            {% include 'includes/messages.html' %}
+            <div class="main-card mb-3 card">
+                <div class="card-body"><h5 class="card-title">Add New Location Website</h5>
+                    <form class="" action="{% url 'add-location-website' %}" method="POST">
+                        {% csrf_token %}
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="position-relative form-group"><label for="location" class="">Location</label>
+                                    <select name="location" class="mb-2 form-control" id="location" required>
+                                        <option value="" disabled selected>-- Select Location --</option>
+                                        {% for loc in location %}
+                                
+                                        <option value="{{loc.id}}">{{loc.loc_name}}</option>
+                                        {% endfor %}
+                                        
+                                    </select>  
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="position-relative form-group"><label for="url_abbr" class="">Url Abbr.</label><input name="url_abbr" id="url_abbr" placeholder="Enter Url Abbr." type="text" class="form-control" required></div>
+                            </div>
+                        </div>
+                        
+                       
+
+                        <div class="form-row">
+                            
+                            <div class="col-md-6">
+                                <div class="position-relative form-group"><label for="location_admin" class="">Location Admin</label>
+                                    <select name="location_admin" class="mb-2 form-control" id="location_admin" required>
+                                        <option value="" disabled selected>-- Select Location Admin --</option>
+                                        
+                                    </select>  
+                                </div>
+                            </div>
+                           
+                        </div>
+                        <button class="mt-2 btn btn-primary">Next</button>
+                        
+                    <a href="{{request.META.HTTP_REFERER}}" class="mt-2 btn btn-secondary">&lt; Back</a>
+                        
+                    </form>
+                </div>
+            </div>
+            
+        </div>
+        
+    </div>
+</div>
+
+{% endblock %}
+
+{% block js %}
+    <script>
+        $('#location').change(function(){
+            var selectedLocation = $(this).val()
+            // alert($(this).val());
+        
+        $.ajax({
+            type: 'GET',
+            url: '{% url "get_location_admin_list" %}',
+            data : { 'selected_location': selectedLocation},
+            dataType: 'json',
+            success : function(data) {
+                console.log("requested access complete");
+                console.log(data);
+                $("#location_admin").empty();
+                var location_admin = $("#location_admin");
+                $(data.data).each(function () {
+                    var option = $("<option />");
+    
+                    //Set Customer Name in Text part.
+                    option.html(this.name);
+    
+                    //Set Customer CustomerId in Value part.
+                    option.val(this.id);
+    
+                    //Add the Option element to DropDownList.
+                    location_admin.append(option);
+                });
+
+            }
+        })
+
+    })
+    </script>
+{% endblock %}

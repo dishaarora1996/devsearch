@@ -1,0 +1,171 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="app-main__inner">
+    <div class="app-page-title">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div class="page-title-icon">
+                    <i class="pe-7s-add-user text-success">
+                    </i>
+                </div>
+                <div>Manage Blog
+                    <div class="page-title-subheading">Edit Blog
+                    </div>
+                </div>
+            </div>
+            <div class="page-title-actions">
+                
+            
+            </div>    
+        </div>
+    </div>
+   
+    <div class="tab-content">
+        <div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
+            {% include 'includes/messages.html' %}
+            <div class="main-card mb-3 card">
+                <div class="card-body"><h5 class="card-title">Edit Blog</h5>
+                    <form class="" action="{% url 'edit-blog' blog_id=blog.id%}" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="position-relative form-group"><label for="blog_title" class="">Blog Title</label><input name="blog_title" id="blog_title" placeholder="Enter blog title" type="text" class="form-control" value="{{blog.blog_title}}" required></div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="position-relative form-group"><label for="location" class="">Location</label>
+                                    <select name="location" class="mb-2 form-control" id="location" required>
+                                        {% if blog.location %}
+                                        <option value="{{blog.location.id}}" selected>{{blog.location}}</option>
+                                        {% else %}
+                                        <option value="All Location" selected>All Location</option>
+                                        {% endif %}
+                                        <option value="All Location">All Location</option>
+                                        {% for loc in location %}
+                                
+                                        <option value="{{loc.id}}">{{loc.loc_name}}</option>
+                                        {% endfor %}
+                                        
+                                    </select>  
+                                </div>
+                            </div>
+                            
+                        </div>
+                        
+                       
+
+                        <div class="form-row">
+                            
+                            <div class="col-md-6">
+                                <div class="position-relative form-group"><label for="location_admin" class="">Short Description</label>
+                                <textarea id="short_description" name="short_description" rows="4" cols="60">
+                                    {{blog.short_description}}
+                                </textarea> 
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="position-relative form-group"><label for="blog_image" class="">Blog Image</label>
+                                    <input name="blog_image" id="blog_image"  type="file" class="form-control">
+                                    {{blog.blog_image}} 
+                                </div>
+                            </div>
+                           
+                        </div>
+
+                        <div class="form-row">
+                            
+                            <div class="col-md-12">
+                                <div class="position-relative form-group"><label for="meta_keyword" class="">Long Description</label>
+                                    <textarea name="decription_editor" class="form-control" rows="12" cols="50" >{{blog.long_description}}</textarea>
+                                
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="form-row">
+                            
+                            <div class="col-md-6">
+                                <div class="position-relative form-group"><label for="meta_title" class="">Meta Title</label>
+                                    <input name="meta_title" id="meta_title" placeholder="Enter Meta title" type="text" class="form-control" value="{{blog.meta_title}}">
+                                
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="position-relative form-group"><label for="meta_description" class="">Meta Description</label>
+                                    <input name="meta_description" id="meta_description" placeholder="Enter Meta  Description" type="text" class="form-control" value="{{blog.meta_description}}">
+                                
+                                </div>
+                            </div>
+
+                            
+                           
+                        </div>
+
+                        <div class="form-row">
+                            
+                            <div class="col-md-6">
+                                <div class="position-relative form-group"><label for="meta_keyword" class="">Meta Keyword</label>
+                                    <input name="meta_keyword" id="meta_keyword" placeholder="Enter Meta Keyword" type="text" class="form-control" value="{{blog.meta_keyword}}">
+                                
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="mt-2 btn btn-primary">Submit</button>
+                        <a href="{{request.META.HTTP_REFERER}}" class="mt-2 btn btn-secondary">&lt; Back</a>
+                        
+                    </form>
+                </div>
+            </div>
+            
+        </div>
+        
+    </div>
+</div>
+
+{% endblock %}
+
+{% block js %}
+    <script>
+
+        <!-- CK Editor -->
+        window.onload = function() {
+            CKEDITOR.replace('decription_editor');
+        };
+
+        $('#location').change(function(){
+            var selectedLocation = $(this).val()
+            // alert($(this).val());
+        
+        $.ajax({
+            type: 'GET',
+            url: '{% url "get_location_admin_list" %}',
+            data : { 'selected_location': selectedLocation},
+            dataType: 'json',
+            success : function(data) {
+                console.log("requested access complete");
+                console.log(data);
+                $("#location_admin").empty();
+                var location_admin = $("#location_admin");
+                $(data.data).each(function () {
+                    var option = $("<option />");
+    
+                    //Set Customer Name in Text part.
+                    option.html(this.name);
+    
+                    //Set Customer CustomerId in Value part.
+                    option.val(this.id);
+    
+                    //Add the Option element to DropDownList.
+                    location_admin.append(option);
+                });
+
+            }
+        })
+
+    })
+    </script>
+{% endblock %}

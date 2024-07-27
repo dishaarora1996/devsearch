@@ -1,0 +1,319 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="app-main__inner">
+    <div class="app-page-title">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div class="page-title-icon">
+                    <i class="pe-7s-user icon-gradient bg-happy-itmeo">
+                    </i>
+                </div>
+                <div>User Management
+                    <div class="page-title-subheading">Manage all service providers and their business
+                    </div>
+                </div>
+            </div>
+            <div class="page-title-actions">
+                
+                <button type="button" onclick="window.location='add-admin-user.html'" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn-shadow btn btn-info">
+                    Add Service Provider
+                </button>
+            </div>    
+        </div>
+    </div>            
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="main-card mb-3 card">
+                    <div class="card-body"><h5 class="card-title"></h5>
+                        <div>
+                            <form class="form-inline">
+                                <div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group"><label for="exampleEmail22" class="mr-sm-2">Search By</label>
+                                    <input name="sarch" id="sarch" placeholder="Name/Company Name / Email / Phone Number" type="text" class="form-control">
+                                </div>
+                                <div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group"><label for="examplePassword22" class="mr-sm-2">Status</label>
+                                    <select name="user-type" id="exampleSelect" class="form-control">
+                                        <option value="">Select Status</option>
+                                        <option value="All" selected>All</option>
+                                        <option value="Active">Active</option>
+                                        <option value="Inactive">Inactive</option>
+                                        <option value="Awating">Awating Approval</option>
+                                        <option value="Awating">Rejected</option>
+                                    </select>
+                                </div>
+                                <button class="btn btn-primary">Saerch</button>
+                            </form>
+                            <div class="divider"></div>
+                        </div>
+                    </div>
+                <div class="card-body">
+                    <h5 class="card-title">List Providers</h5>
+                    
+                   
+                    <div class="table-responsive">
+                        <div class="col-md-12">
+                            <div class="card-user b-1 hover-shadow mb-20">
+                                <div class="media card-body">
+                                    <div class="media-left pr-12">
+                                        <img class="avatar avatar-xl no-radius" src="assets/images/provider-logo2.png" alt="...">
+                                    </div>
+                                    <div class="media-body">
+                                        <div class="mb-2">
+                                            <span class="fs-20 pr-16">A R Motor Works</span> <div class="mb-2 mr-2 badge badge-success">Active</div>
+                                        </div>
+                                        <small class="fs-16 fw-300 ls-1">Arun Raj Malhotra</small> 
+                                        <small class="fs-16 fw-300 ls-1"><br><i class="fa fa-phone"></i>&nbsp;+91-7891739001</small>
+                                        <small class="fs-16 fw-300 ls-1"><br><i class="fa fa-envelope"></i>&nbsp;armw@gmail.com</small>
+                                    </div>
+                                    <div class="media-right text-right d-none d-md-block">
+                                        <p class="fs-14 text-fade mb-12"><i class="fa fa-map-marker pr-1"></i> Kandivali East, Mumbai</p>
+                                        <span class="text-fade"> 
+                                                <span class="fa fa-star checked"></span>
+                                                <span class="fa fa-star checked"></span>
+                                                <span class="fa fa-star checked"></span>
+                                                <span class="fa fa-star"></span>
+                                                <span class="fa fa-star"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <footer class="card-user-footer flexbox align-items-center">
+                                    <div>
+                                        <strong>Activated on:</strong>
+                                        <span>21 June, 2022</span>
+                                    </div>
+                                    <div class="card-hover-show">
+                                        <a class="mb-2 mr-2 btn btn-info" href="provider-detail.html">View Detauls</a>
+                                        <a class="mb-2 mr-2 btn btn-primary" href="#">Edit</a>
+                                        <a class="mb-2 mr-2 btn btn-dark" href="#">Staffs</a>
+                                        <a class="mb-2 mr-2 btn btn-alternate" href="#">Payments</a>
+                                        <a class="mb-2 mr-2 btn btn-success" href="#">Bookings</a>
+                                        <a class="mb-2 mr-2 btn btn-danger" href="#">Remove</a>
+                                    </div>
+                                </footer>
+                            </div>
+                        
+                            <div class="card-user b-1 hover-shadow mb-20 pending">
+                                <div class="media card-body">
+                                    <div class="media-left pr-12">
+                                        <img class="avatar avatar-xl no-radius" src="assets/images/provider-logo1.png" alt="...">
+                                    </div>
+                                    <div class="media-body">
+                                        <div class="mb-2">
+                                            <span class="fs-20 pr-16">S S Car Junction</span> <div class="mb-2 mr-2 badge badge-warning">Awaiting Approval</div>
+                                        </div>
+                                        <small class="fs-16 fw-300 ls-1">Rohit Roy</small> 
+                                        <small class="fs-16 fw-300 ls-1"><br><i class="fa fa-phone"></i>&nbsp;+91-6712009123</small>
+                                        <small class="fs-16 fw-300 ls-1"><br><i class="fa fa-envelope"></i>&nbsp;sscj@gmail.com</small>
+                                    </div>
+                                    <div class="media-right text-right d-none d-md-block">
+                                        <p class="fs-14 text-fade mb-12"><i class="fa fa-map-marker pr-1"></i> Paharganj, Delhi</p>
+                                        <span class="text-fade"> 
+                                            <span class="fa fa-star"></span>
+                                            <span class="fa fa-star"></span>
+                                            <span class="fa fa-star"></span>
+                                            <span class="fa fa-star"></span>
+                                            <span class="fa fa-star"></span>
+                                    </span>
+                                    </div>
+                                </div>
+                                <footer class="card-user-footer flexbox align-items-center">
+                                    <div>
+                                        <strong>Activated on:</strong>
+                                        <span>N/A</span>
+                                    </div>
+                                    <div class="card-hover-show">
+                                        <a class="mb-2 mr-2 btn btn-info" href="provider-detail.html">View Detauls</a>
+                                        <a class="mb-2 mr-2 btn btn-primary" href="#">Edit</a>
+                                        <a class="mb-2 mr-2 btn btn-dark disabled" href="#">Staffs</a>
+                                        <a class="mb-2 mr-2 btn btn-alternate disabled" href="#">Payments</a>
+                                        <a class="mb-2 mr-2 btn btn-success disabled" href="#">Bookings</a>
+                                        <a class="mb-2 mr-2 btn btn-danger disabled" href="#">Remove</a>
+                                    </div>
+                                </footer>
+                            </div>
+                        
+                            <div class="card-user b-1 hover-shadow mb-20">
+                                <div class="media card-body">
+                                    <div class="media-left pr-12">
+                                        <img class="avatar avatar-xl no-radius" src="assets/images/provider-logo2.png" alt="...">
+                                    </div>
+                                    <div class="media-body">
+                                        <div class="mb-2">
+                                            <span class="fs-20 pr-16">A R Motor Works</span> <div class="mb-2 mr-2 badge badge-success">Active</div>
+                                        </div>
+                                        <small class="fs-16 fw-300 ls-1">Arun Raj Malhotra</small> 
+                                        <small class="fs-16 fw-300 ls-1"><br><i class="fa fa-phone"></i>&nbsp;+91-7891739001</small>
+                                        <small class="fs-16 fw-300 ls-1"><br><i class="fa fa-envelope"></i>&nbsp;armw@gmail.com</small>
+                                    </div>
+                                    <div class="media-right text-right d-none d-md-block">
+                                        <p class="fs-14 text-fade mb-12"><i class="fa fa-map-marker pr-1"></i> Kandivali East, Mumbai</p>
+                                        <span class="text-fade"> 
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <footer class="card-user-footer flexbox align-items-center">
+                                    <div>
+                                        <strong>Activated on:</strong>
+                                        <span>21 Jan, 2017</span>
+                                    </div>
+                                    <div class="card-hover-show">
+                                        <a class="mb-2 mr-2 btn btn-info" href="provider-detail.html">View Detauls</a>
+                                        <a class="mb-2 mr-2 btn btn-primary" href="#">Edit</a>
+                                        <a class="mb-2 mr-2 btn btn-dark" href="#">Staffs</a>
+                                        <a class="mb-2 mr-2 btn btn-alternate" href="#">Payments</a>
+                                        <a class="mb-2 mr-2 btn btn-success" href="#">Bookings</a>
+                                        <a class="mb-2 mr-2 btn btn-danger" href="#">Remove</a>
+                                    </div>
+                                </footer>
+                            </div>
+                        
+                            <div class="card-user b-1 hover-shadow mb-20">
+                                <div class="media card-body">
+                                    <div class="media-left pr-12">
+                                        <img class="avatar avatar-xl no-radius" src="assets/images/provider-logo2.png" alt="...">
+                                    </div>
+                                    <div class="media-body">
+                                        <div class="mb-2">
+                                            <span class="fs-20 pr-16">A R Motor Works</span> <div class="mb-2 mr-2 badge badge-secondary">Inactive</div>
+                                        </div>
+                                        <small class="fs-16 fw-300 ls-1">Arun Raj Malhotra</small> 
+                                        <small class="fs-16 fw-300 ls-1"><br><i class="fa fa-phone"></i>&nbsp;+91-7891739001</small>
+                                        <small class="fs-16 fw-300 ls-1"><br><i class="fa fa-envelope"></i>&nbsp;armw@gmail.com</small>
+                                    </div>
+                                    <div class="media-right text-right d-none d-md-block">
+                                        <p class="fs-14 text-fade mb-12"><i class="fa fa-map-marker pr-1"></i> Kandivali East, Mumbai</p>
+                                        <span class="text-fade"> 
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <footer class="card-user-footer flexbox align-items-center">
+                                    <div>
+                                        <strong>Activated on:</strong>
+                                        <span>21 Jan, 2017</span>
+                                    </div>
+                                    <div class="card-hover-show">
+                                        <a class="mb-2 mr-2 btn btn-info" href="provider-detail.html">View Detauls</a>
+                                        <a class="mb-2 mr-2 btn btn-primary" href="#">Edit</a>
+                                        <a class="mb-2 mr-2 btn btn-dark" href="#">Staffs</a>
+                                        <a class="mb-2 mr-2 btn btn-alternate" href="#">Payments</a>
+                                        <a class="mb-2 mr-2 btn btn-success" href="#">Bookings</a>
+                                        <a class="mb-2 mr-2 btn btn-danger" href="#">Remove</a>
+                                    </div>
+                                </footer>
+                            </div>
+                            <div class="card-user b-1 hover-shadow mb-20">
+                                <div class="media card-body">
+                                    <div class="media-left pr-12">
+                                        <img class="avatar avatar-xl no-radius" src="assets/images/provider-logo2.png" alt="...">
+                                    </div>
+                                    <div class="media-body">
+                                        <div class="mb-2">
+                                            <span class="fs-20 pr-16">A R Motor Works</span> <div class="mb-2 mr-2 badge badge-success">Active</div>
+                                        </div>
+                                        <small class="fs-16 fw-300 ls-1">Arun Raj Malhotra</small> 
+                                        <small class="fs-16 fw-300 ls-1"><br><i class="fa fa-phone"></i>&nbsp;+91-7891739001</small>
+                                        <small class="fs-16 fw-300 ls-1"><br><i class="fa fa-envelope"></i>&nbsp;armw@gmail.com</small>
+                                    </div>
+                                    <div class="media-right text-right d-none d-md-block">
+                                        <p class="fs-14 text-fade mb-12"><i class="fa fa-map-marker pr-1"></i> Kandivali East, Mumbai</p>
+                                        <span class="text-fade"> 
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star"></span>
+                                            <span class="fa fa-star"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <footer class="card-user-footer flexbox align-items-center">
+                                    <div>
+                                        <strong>Activated on:</strong>
+                                        <span>21 Jan, 2017</span>
+                                    </div>
+                                    <div class="card-hover-show">
+                                        <a class="mb-2 mr-2 btn btn-info" href="provider-detail.html">View Detauls</a>
+                                        <a class="mb-2 mr-2 btn btn-primary" href="#">Edit</a>
+                                        <a class="mb-2 mr-2 btn btn-dark" href="#">Staffs</a>
+                                        <a class="mb-2 mr-2 btn btn-alternate" href="#">Payments</a>
+                                        <a class="mb-2 mr-2 btn btn-success" href="#">Bookings</a>
+                                        <a class="mb-2 mr-2 btn btn-danger" href="#">Remove</a>
+                                    </div>
+                                </footer>
+                            </div>
+                        
+                            <div class="card-user b-1 hover-shadow mb-20">
+                                <div class="media card-body">
+                                    <div class="media-left pr-12">
+                                        <img class="avatar avatar-xl no-radius" src="assets/images/provider-logo2.png" alt="...">
+                                    </div>
+                                    <div class="media-body">
+                                        <div class="mb-2">
+                                            <span class="fs-20 pr-16">A R Motor Works</span> <div class="mb-2 mr-2 badge badge-secondary">Inactive</div>
+                                        </div>
+                                        <small class="fs-16 fw-300 ls-1">Arun Raj Malhotra</small> 
+                                        <small class="fs-16 fw-300 ls-1"><br><i class="fa fa-phone"></i>&nbsp;+91-7891739001</small>
+                                        <small class="fs-16 fw-300 ls-1"><br><i class="fa fa-envelope"></i>&nbsp;armw@gmail.com</small>
+                                    </div>
+                                    <div class="media-right text-right d-none d-md-block">
+                                        <p class="fs-14 text-fade mb-12"><i class="fa fa-map-marker pr-1"></i> Kandivali East, Mumbai</p>
+                                        <span class="text-fade"> 
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <footer class="card-user-footer flexbox align-items-center">
+                                    <div>
+                                        <strong>Activated on:</strong>
+                                        <span>21 Jan, 2017</span>
+                                    </div>
+                                    <div class="card-hover-show">
+                                        <a class="mb-2 mr-2 btn btn-info" href="provider-detail.html">View Detauls</a>
+                                        <a class="mb-2 mr-2 btn btn-primary" href="#">Edit</a>
+                                        <a class="mb-2 mr-2 btn btn-dark" href="#">Staffs</a>
+                                        <a class="mb-2 mr-2 btn btn-alternate" href="#">Payments</a>
+                                        <a class="mb-2 mr-2 btn btn-success" href="#">Bookings</a>
+                                        <a class="mb-2 mr-2 btn btn-danger" href="#">Remove</a>
+                                    </div>
+                                </footer>
+                            </div>
+                        
+                            <div class="" style="margin-top: 20px;">
+                                <nav class="" aria-label="Page navigation">
+                                    <ul class="pagination">
+                                        <li class="page-item"><a href="javascript:void(0);" class="page-link" aria-label="Previous"><span aria-hidden="true">«</span><span class="sr-only">Previous</span></a></li>
+                                        <li class="page-item active"><a href="javascript:void(0);" class="page-link">1</a></li>
+                                        <li class="page-item"><a href="javascript:void(0);" class="page-link">2</a></li>
+                                        <li class="page-item"><a href="javascript:void(0);" class="page-link">3</a></li>
+                                        <li class="page-item"><a href="javascript:void(0);" class="page-link">4</a></li>
+                                        <li class="page-item"><a href="javascript:void(0);" class="page-link">5</a></li>
+                                        <li class="page-item"><a href="javascript:void(0);" class="page-link" aria-label="Next"><span aria-hidden="true">»</span><span class="sr-only">Next</span></a></li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+      
+    </div>
+</div>
+
+{% endblock %}

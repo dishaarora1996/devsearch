@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="app-main__inner">
+    <div class="app-page-title">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div class="page-title-icon">
+                    <i class="pe-7s-add-user text-success">
+                    </i>
+                </div>
+                <div>Manage Location Website
+                    <div class="page-title-subheading">Edit Location Website - {{location_website.location}}
+                    </div>
+                </div>
+            </div>
+            <div class="page-title-actions">
+                
+            
+            </div>    
+        </div>
+    </div>
+   
+    <div class="tab-content">
+        <div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
+            {% include 'includes/messages.html' %}
+            <div class="main-card mb-3 card">
+                <div class="card-body"><h5 class="card-title heading">Location Website - {{location_website.location}}</h5>
+                    <form class="" action="" method="POST">
+                        {% csrf_token %}
+
+                        <div class="form-row">
+                            
+                            <div class="col-md-6">
+                                <div class="position-relative form-group"><label for="location_admin" class=""><b>Location Admin</b></label>
+                                    
+                                    <select name="location_admin" class="mb-2 form-control" id="location_admin">
+                                        <option value="{{location_website.location_admin.id}}">{{location_website.location_admin}}</option>
+                                        {% for employee in employee_list %}
+                                        <option value="{{employee.id}}">{{employee.name}}</option>
+                                        {% endfor %}
+                                    </select>  
+                                </div>
+                            </div>
+                           
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="position-relative form-group"><label for="location_menu" class=""><b>Select Location Menu:</b></label><br>
+                                    {% for menu in selected_menu_list_name %}
+                                        <input type='checkbox' name='location_website_menu' value='{{menu.location_menu_id}}' id ='{{menu.location_menu_id}}' checked
+                                        {% if menu.location_menu_id__location_menu_name == 'HOME'%} disabled {% endif %}>
+                                        <label for='{{menu.location_menu_id}}'>{{ menu.location_menu_id__location_menu_name }}</label><br>
+                                    {% endfor %}
+                                    {% for menu in location_website_menu %}
+                                        <input type='checkbox' name='location_website_menu' value='{{menu.id}}' id ='{{menu.id}}'>
+                                        <label for='{{menu.id}}'>{{ menu.location_menu_name }}</label><br>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            
+                        </div>
+                        
+                       
+
+                        
+                        <button class="mt-2 btn btn-primary">Submit</button>
+                        
+                    <a href="{{request.META.HTTP_REFERER}}" class="mt-2 btn btn-secondary">&lt; Back</a>
+                        
+                    </form>
+                </div>
+            </div>
+            
+        </div>
+        
+    </div>
+</div>
+
+{% endblock %}
+
+{% block js %}
+    <script>
+        $('#location').change(function(){
+            var selectedLocation = $(this).val()
+            // alert($(this).val());
+        
+        $.ajax({
+            type: 'GET',
+            url: '{% url "get_location_admin_list" %}',
+            data : { 'selected_location': selectedLocation},
+            dataType: 'json',
+            success : function(data) {
+                console.log("requested access complete");
+                console.log(data);
+                $("#location_admin").empty();
+                var location_admin = $("#location_admin");
+                $(data.data).each(function () {
+                    var option = $("<option />");
+    
+                    //Set Customer Name in Text part.
+                    option.html(this.name);
+    
+                    //Set Customer CustomerId in Value part.
+                    option.val(this.id);
+    
+                    //Add the Option element to DropDownList.
+                    location_admin.append(option);
+                });
+
+            }
+        })
+
+    })
+    </script>
+{% endblock %}

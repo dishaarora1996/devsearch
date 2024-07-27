@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="app-main__inner">
+    <div class="app-page-title">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div class="page-title-icon">
+                    <i class="pe-7s-user icon-gradient bg-happy-itmeo">
+                    </i>
+                </div>
+                <div>{{location_type}} Pages {% if location_type == 'Location' %}  - {{location_name}}{% endif %}
+                    <div class="page-title-subheading">Manage {{location_type}} Pages
+                    </div>
+                </div>
+            </div>
+            {% if location_type == "Corporate" and menu_permission.can_add %}
+            <div class="page-title-actions">
+                <a href = "{% url 'add-corporate-pages' %}" class="btn-shadow btn btn-info"> Add Corporate Pages</a>
+            </div>
+            {% endif %}  
+        </div>
+    </div>            
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="main-card mb-3 card">
+                    
+                <div class="card-body">
+                    <h5 class="card-title heading">{{location_type}} Pages {% if location_type == 'Location' %}  - {{location_name}}{% endif %}</h5>
+                    <div class="table-responsive">
+                        <table class="mb-0 table">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Title</th>
+                                <th>Description</th>
+                                <th>Location</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for pages in corporate_pages %}
+                            <tr>
+                                <th scope="row">{{forloop.counter}}</th>
+                                <td>{{pages.page_title}}</td>
+                                <td>
+                                    <div class="btn btn-primary">Preview <i class="fa fa-eye" style="cursor: pointer;" title="View"> </i></div>
+                                </td>
+                                <td>{{pages.location}}</td>
+                                <td>
+                                    <form class="" action="{%url 'change-corporate-pages-status' %}" method="GET">
+                                        {% csrf_token %}
+                                            <input type="hidden" value="{{pages.id}}" name="page_id">
+                                            <input type="hidden" value="{{pages.location}}" name="location">
+                                        {% if pages.status == 'Active' %}
+                                            <input type="hidden" value="Inactive" name="page_status">
+                                        {% else %}
+                                            <input type="hidden" value="Active" name="page_status">
+                                        {% endif %}
+                                        <button class="btn {% if pages.status == 'Active' %} btn-success {% else %} btn-warning {% endif %} pt-0 pb-0">{{pages.status}}</button>
+                                    </form>
+                                    <!-- <a href=""><div class="mb-2 mr-2 badge {% if pages.status == 'Active' %} badge-success {% else %} badge-warning {% endif %}">{{pages.status}}</div></a> -->
+
+                                </td>
+                                {% if pages.page_title != 'LOCATIONS' %}
+                                <td>
+                                    {% if menu_permission.can_edit %}
+                                    <a href="{% url 'edit-corporate-pages' pages.id %}"><i class="fa fa-edit" style="cursor: pointer;" title="Edit"> </i></a>
+                                    {% endif %}
+                                </td>
+                                {% endif %}
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- <div class="" style="margin-top: 20px;">
+                    <nav class="" aria-label="Page navigation">
+                        <ul class="pagination">
+                            <li class="page-item"><a href="javascript:void(0);" class="page-link" aria-label="Previous"><span aria-hidden="true">«</span><span class="sr-only">Previous</span></a></li>
+                            <li class="page-item"><a href="javascript:void(0);" class="page-link">1</a></li>
+                            <li class="page-item active"><a href="javascript:void(0);" class="page-link">2</a></li>
+                            <li class="page-item"><a href="javascript:void(0);" class="page-link">3</a></li>
+                            <li class="page-item"><a href="javascript:void(0);" class="page-link">4</a></li>
+                            <li class="page-item"><a href="javascript:void(0);" class="page-link">5</a></li>
+                            <li class="page-item"><a href="javascript:void(0);" class="page-link" aria-label="Next"><span aria-hidden="true">»</span><span class="sr-only">Next</span></a></li>
+                        </ul>
+                    </nav>
+                </div> -->
+                </div>
+            </div>
+        </div>
+      
+    </div>
+</div>
+
+{% endblock %}

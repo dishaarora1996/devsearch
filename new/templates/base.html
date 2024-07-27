@@ -1,0 +1,344 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Language" content="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>BBA Admin Control Panel - Admin Users.</title>
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
+    <meta name="description" content="Tables are the backbone of almost all web applications.">
+    <meta name="msapplication-tap-highlight" content="no">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+    <link href="{% static 'css/main.css' %}" rel="stylesheet">
+    <link href="{% static 'css/custom.css' %}" rel="stylesheet">
+    <style>
+
+        .heading {
+        color: #8B96A2;
+        }
+    </style>
+</head>
+{% autoescape on %}
+<body>
+    <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
+        <div class="app-header header-shadow">
+            <div class="app-header__logo">
+                <div class="logo-src"></div>
+                <div class="header__pane ml-auto">
+                    <div>
+                        <button type="button" class="hamburger close-sidebar-btn hamburger--elastic"
+                            data-class="closed-sidebar">
+                            <span class="hamburger-box">
+                                <span class="hamburger-inner"></span>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="app-header__mobile-menu">
+                <div>
+                    <button type="button" class="hamburger hamburger--elastic mobile-toggle-nav">
+                        <span class="hamburger-box">
+                            <span class="hamburger-inner"></span>
+                        </span>
+                    </button>
+                </div>
+            </div>
+            <div class="app-header__menu">
+                <span>
+                    <button type="button"
+                        class="btn-icon btn-icon-only btn btn-primary btn-sm mobile-toggle-header-nav">
+                        <span class="btn-icon-wrapper">
+                            <i class="fa fa-ellipsis-v fa-w-6"></i>
+                        </span>
+                    </button>
+                </span>
+            </div>
+            <div class="app-header__content">
+                <div class="app-header-left">
+
+                    <ul class="header-menu nav">
+                        <!-- <li class="nav-item">
+                            <a href="javascript:void(0);" class="nav-link">
+                                <i class="nav-link-icon fa fa-database"> </i>
+                                Statistics
+                            </a>
+                        </li> -->
+                        <li class="dropdown nav-item">
+                            <a href="javascript:void(0);" class="nav-link btn-open-options">
+                                <i class="nav-link-icon fa fa-cog"></i>
+                                Settings
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="app-header-right">
+                    <div class="header-btn-lg pr-0">
+                        <div class="widget-content p-0">
+                            <div class="widget-content-wrapper">
+                                <div class="widget-content-left">
+                                    <div class="btn-group">
+                                        <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                            class="p-0 btn">
+                                            <!-- <img width="42" class="rounded-circle" src="{% static 'images/user.png' %}"
+                                                alt=""> -->
+                                            {% if user_profile_image %}
+                                            <img width="42" class="rounded-circle" src="{{IMAGE_MEDIA_PATH}}{{user_profile_image}}"
+                                                alt="">
+                                            {% else %}
+                                            <img width="42" class="rounded-circle" src="{% static 'images/user.png' %}"
+                                                alt="">
+                                            {% endif %}
+
+                                            <span><b>{{request.user.email}}</b></span>
+
+
+                                            <i class="fa fa-angle-down ml-2 opacity-8"></i>
+                                        </a>
+                                        <div tabindex="-1" role="menu" aria-hidden="true"
+                                            class="dropdown-menu dropdown-menu-right">
+                                            <button type="button" tabindex="0" class="dropdown-item">My Account</button>
+                                            <button type="button" tabindex="0"
+                                                class="dropdown-item btn-open-options">Settings</button>
+
+                                            <div tabindex="-1" class="dropdown-divider"></div>
+                                            <a href="{% url 'user-logout' %}"><button type="button" tabindex="0"
+                                                    class="dropdown-item">Logout</button></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="widget-content-left  ml-3 header-user-info">
+                                    <div class="widget-heading">
+                                        Super Admin
+                                    </div>
+                                    <div class="widget-subheading">
+                                        Super Admin
+                                    </div>
+                                </div>
+                                <div class="widget-content-right header-user-info ml-3">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ui-theme-settings">
+
+            <div class="theme-settings__inner">
+                <div class="scrollbar-container">
+                    <div class="theme-settings__options-wrapper">
+                        <h3 class="themeoptions-heading">General Settings
+                        </h3>
+                        <div class="p-3">
+                            <form>
+                                <ul class="list-group">
+
+                                    <li class="list-group-item">
+                                        <div class="widget-content p-0">
+                                            <div class="">
+                                                <div class="form-row">
+                                                    <div class="col-md-12">
+                                                        <div class="position-relative form-group"><label for="Name"
+                                                                class="">Site Title</label><input name="site-name"
+                                                                id="site-name" placeholder="Enter Site Title"
+                                                                value="BBA" type="text" class="form-control"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="widget-content p-0">
+                                            <div class="widget-content-wrapper">
+                                                <div class="form-row">
+                                                    <div class="col-md-12">
+                                                        <div class="position-relative form-group"><label for="Name"
+                                                                class="">Update Logo</label><input name="site-logo"
+                                                                id="site-logo" type="file" class="form-control"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="widget-content p-0">
+                                            <div class="">
+                                                <div class="form-row">
+                                                    <div class="col-md-12">
+                                                        <div class="position-relative form-group"><label
+                                                                for="Admin Email" class="">Admin Contact
+                                                                Email</label><input name="admin-contact-email"
+                                                                id="admin-contact-email" value="admin@bba.in"
+                                                                type="email" class="form-control"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="widget-content p-0">
+                                            <div class="">
+                                                <div class="form-row">
+                                                    <div class="col-md-12">
+                                                        <div class="position-relative form-group"><button
+                                                                class="mt-2 btn btn-primary">Update</button></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </form>
+                        </div>
+                        <h3 class="themeoptions-heading">
+                            <div>
+                                Payment Settings
+                            </div>
+
+                        </h3>
+                        <div class="p-3">
+                            <form>
+                                <ul class="list-group">
+
+                                    <li class="list-group-item">
+                                        <div class="widget-content p-0">
+                                            <div class="">
+                                                <div class="form-row">
+                                                    <div class="col-md-12">
+                                                        <div class="position-relative form-group"><label for="API Key"
+                                                                class="">Razor Pay API Key</label><input name="api-key"
+                                                                id="api-key" placeholder="Enter Site Title"
+                                                                value="XUA12398093123AD4334243213KUlL0765456"
+                                                                type="text" class="form-control"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <li class="list-group-item">
+                                        <div class="widget-content p-0">
+                                            <div class="">
+                                                <div class="form-row">
+                                                    <div class="col-md-12">
+                                                        <div class="position-relative form-group"><label
+                                                                for="API Secret" class="">Rajor Pay API
+                                                                Secret</label><input name="api-secret" id="api-secret"
+                                                                value="DSAD=!dkjasdjkn319121239y731273891239873kjdasdakda---0=@@udsajhaj"
+                                                                type="text" class="form-control"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="widget-content p-0">
+                                            <div class="">
+                                                <div class="form-row">
+                                                    <div class="col-md-12">
+                                                        <div class="position-relative form-group"><button
+                                                                class="mt-2 btn btn-primary">Update</button></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="app-main">
+            <div class="app-sidebar sidebar-shadow">
+                <div class="app-header__logo">
+                    <div class="logo-src"></div>
+                    <div class="header__pane ml-auto">
+                        <div>
+                            <button type="button" class="hamburger close-sidebar-btn hamburger--elastic"
+                                data-class="closed-sidebar">
+                                <span class="hamburger-box">
+                                    <span class="hamburger-inner"></span>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="app-header__mobile-menu">
+                    <div>
+                        <button type="button" class="hamburger hamburger--elastic mobile-toggle-nav">
+                            <span class="hamburger-box">
+                                <span class="hamburger-inner"></span>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+                <div class="app-header__menu">
+                    <span>
+                        <button type="button"
+                            class="btn-icon btn-icon-only btn btn-primary btn-sm mobile-toggle-header-nav">
+                            <span class="btn-icon-wrapper">
+                                <i class="fa fa-ellipsis-v fa-w-6"></i>
+                            </span>
+                        </button>
+                    </span>
+                </div>
+                {% include 'includes/scrollbar-sidebar.html' %}
+            </div>
+            <div class="app-main__outer">
+                {% block content %}
+                {% endblock %}
+                <div class="app-wrapper-footer">
+                    <div class="app-footer">
+                        <div class="app-footer__inner">
+                            <div class="app-footer-left">
+
+                            </div>
+                            <div class="app-footer-right">
+                                <ul class="nav">
+
+                                    <li class="nav-item">
+                                        <a href="javascript:void(0);" class="nav-link">
+                                            <div class="badge badge-success mr-1 ml-0">
+                                                <small>Copyright</small>
+                                            </div>
+                                            BBA
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include 'includes/modal_dialog.html' %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <!-- font aawesome kit -->
+    <script src="https://kit.fontawesome.com/c7890550ed.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="{% static 'scripts/main.js' %}"></script>
+    <script src="https://cdn.ckeditor.com/4.11.1/standard/ckeditor.js"></script>
+    {% block js %}
+
+    {% endblock %}
+
+</body>
+
+{% endautoescape %}
+
+</html>

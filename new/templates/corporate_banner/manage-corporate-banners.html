@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="app-main__inner">
+    <div class="app-page-title">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div class="page-title-icon">
+                    <i class="pe-7s-user icon-gradient bg-happy-itmeo">
+                    </i>
+                </div>
+                <div>{{location_type}} Banners {% if location_type == 'Location' %}  - {{location_name}}{% endif %}
+                    <div class="page-title-subheading">Manage {{location_type}} Banners
+                    </div>
+                </div>
+            </div>
+            {% if menu_permission.can_add %}
+            <div class="page-title-actions">
+                <a href = "{% url 'add-banners' location=location_name %}" class="btn-shadow btn btn-info"> Add Banner</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>            
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="main-card mb-3 card">
+                    
+                <div class="card-body">
+                    <h5 class="card-title">{{location_type}} Pages {% if location_type == 'Location' %}  - {{location_name}}{% endif %}</h5>
+                    <div class="table-responsive">
+                        <table class="mb-0 table">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Page Title</th>
+                                <th>Banner Image</th>
+                                <th>Location</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for banner in corporate_banners %}
+                            <tr>
+                                
+                                <th scope="row">{{forloop.counter}}</th>
+                                <td>{{banner.page_title}}</td>
+                                <td>
+
+                                    {% if banner.banner_image %}
+                                    <img src="{{IMAGE_MEDIA_PATH}}{{banner.banner_image}}" 
+                                    width="100px", height="30px" />
+                                    {% else %}
+                                    
+                                    <img src="" />  
+                                    {% endif %}
+                                    
+                                </td>
+                                <td>
+                                    {{banner.location}}
+                                </td>
+                                <td>
+                                    <form class="" action="{% url 'change-corporate-banner-status' %}" method="GET">
+                                        {% csrf_token %}
+                                            <input type="hidden" value="{{banner.id}}" name="banner_id">
+                                            <input type="hidden" value="{{location_name}}" name="location">
+                                        {% if banner.status == 'Active' %}
+                                            <input type="hidden" value="Inactive" name="banner_status">
+                                        {% else %}
+                                            <input type="hidden" value="Active" name="banner_status">
+                                        {% endif %}
+                                        <button class="btn {% if banner.status == 'Active' %} btn-success {% else %} btn-warning {% endif %} pt-0 pb-0">{{banner.status}}</button>
+                                    </form>
+                                    <!-- <a href=""><div class="mb-2 mr-2 badge {% if pages.status == 'Active' %} badge-success {% else %} badge-warning {% endif %}">{{pages.status}}</div></a> -->
+
+                                </td>
+                                <td>
+                                    {% if menu_permission.can_edit %}
+                                    <a href="{% url 'edit-banners' banner_id=banner.id location=location_name %}"><i class="fa fa-edit" style="cursor: pointer;" title="Edit"> </i></a>
+                                    {% endif %}
+                                    {% if menu_permission.can_delete %}
+                                    <a href="{% url 'delete-banners' banner_id=banner.id location=location_name %}"  onclick="return confirm('Are you sure you want to delete?');"><i class="fa fa-trash-alt" style="cursor: pointer;" title="Remove"> </i></a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- <div class="" style="margin-top: 20px;">
+                    <nav class="" aria-label="Page navigation">
+                        <ul class="pagination">
+                            <li class="page-item"><a href="javascript:void(0);" class="page-link" aria-label="Previous"><span aria-hidden="true">«</span><span class="sr-only">Previous</span></a></li>
+                            <li class="page-item"><a href="javascript:void(0);" class="page-link">1</a></li>
+                            <li class="page-item active"><a href="javascript:void(0);" class="page-link">2</a></li>
+                            <li class="page-item"><a href="javascript:void(0);" class="page-link">3</a></li>
+                            <li class="page-item"><a href="javascript:void(0);" class="page-link">4</a></li>
+                            <li class="page-item"><a href="javascript:void(0);" class="page-link">5</a></li>
+                            <li class="page-item"><a href="javascript:void(0);" class="page-link" aria-label="Next"><span aria-hidden="true">»</span><span class="sr-only">Next</span></a></li>
+                        </ul>
+                    </nav>
+                </div> -->
+                </div>
+            </div>
+        </div>
+      
+    </div>
+</div>
+
+{% endblock %}

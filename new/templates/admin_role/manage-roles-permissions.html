@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="app-main__inner">
+    <div class="app-page-title">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div class="page-title-icon">
+                    <i class="pe-7s-tools icon-gradient bg-happy-itmeo">
+                    </i>
+                </div>
+                <div>Roles and Permissions
+                    <div class="page-title-subheading">Manage all user roles
+                    </div>
+                </div>
+            </div>
+            <div class="page-title-actions">
+
+
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="main-card mb-3 card">
+                <div class="card-body">
+                    <h5 class="card-title">Menu Permissions for - {{role_obj.name}}</h5>
+                    <div>
+                        <form accept-charset="utf-8" method="post", action="">
+                            {% csrf_token %}
+                            <!-- <div class="mb-3">
+                                <h6 class="page-title-subheading">Dashboard
+                                    <hr />
+                                </h6>
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="switch1" checked>
+                                    <label class="form-check-label" for="switch1">View dashboard page</label>
+
+                                </div>
+                            </div> -->
+                            <div class="mb-3">
+                                {% for permission in permission_set %}
+                                <h6 class="page-title-subheading"><b>{{permission.parent_menu_name}}</b>
+                                    <hr />
+                                </h6>
+                                {% for child in permission.child_menu %}
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <label for="email" class="text-uppercase" name="{{child.menu_name}}"><small>{{child.menu_name}}</small></label>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" name="can_add_{{child.menu_name}}" value="True" id="switch2" {% if child.can_add %}checked{% endif %}>
+                                            <label class="form-check-label" for="switch2">Add</label>
+                                        </div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" name="can_edit_{{child.menu_name}}" value="True" id="switch3" {% if child.can_edit %}checked{% endif %}>
+                                            <label class="form-check-label" for="switch3">Edit</label>
+                                        </div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" name="can_delete_{{child.menu_name}}" value="True" id="switch4" {% if child.can_delete %}checked{% endif %}>
+                                            <label class="form-check-label" for="switch4">Delete</label>
+                                        </div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" name="can_view_{{child.menu_name}}" value="True" id="switch5" {% if child.can_view %}checked{% endif %}>
+                                            <label class="form-check-label" for="switch4">View</label>
+                                        </div>
+                                        {% if child.menu_name == "Manage Role & Permission"%}
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" name="update_permission_{{child.menu_name}}" value="True" id="switch5" {% if child.update_permission %}checked{% endif %}>
+                                            <label class="form-check-label" for="switch4">Update Permission</label>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                {% endfor %}
+                                {% endfor %}
+                                <button class="mt-2 btn btn-primary">Update</button>
+
+                            </div>
+                            
+                        </form>
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+{% endblock %}
